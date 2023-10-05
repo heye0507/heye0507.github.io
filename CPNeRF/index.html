@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>CP-NeRF: Conditionally Parameterized Neural Radiance Fields for Cross-scene Novel View Synthesis</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:image" content="https://dorverbin.github.io/refnerf/img/refneus_titlecard.jpg">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://heye0507.github.io/CP-NeRF/">
+    <meta property="og:title" content="CP-NeRF: Conditionally Parameterized Neural Radiance Fields for Cross-scene Novel View Synthesis">
+    <meta property="og:description" content="Neural radiance fields (NeRF) have demonstrated a promising research direction for novel view synthesis. However, the ex- isting approaches either require per-scene optimization that takes significant computation time or condition on local features which overlook the global context of images. To tackle this shortcoming, we propose the Conditionally Parameterized Neural Radiance Fields (CP-NeRF), a plug-in module that enables NeRF to leverage contextual information from different scales. Instead of optimizing the model parameters of NeRFs directly, we train a Feature Pyramid hyperNetwork (FPN) that extracts view-dependent global and local information from images within or across scenes to produce the model parameters. Our model can be trained end-to-end with standard photometric loss from NeRF. Extensive experiments demonstrate that our method can significantly boost the performance of NeRF, achieving state-of-the-art results in various benchmark datasets.">
+
+    <!-- mirror: F0%9F%AA%9E&lt -->
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;%E2%9C%A8&lt;/text&gt;&lt;/svg&gt;">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/codemirror.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/video_comparison.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<body>
+        <div class="container" id="main">
+            <div class="row">
+                <h2 class="col-md-12 text-center">
+                    <b>CP-NeRF</b>: Conditionally Parameterized Neural Radiance Fields for Cross-scene Novel View Synthesis<br>
+                    <small>
+                    Pacific Graphics 2023
+                    </small>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="https://heye0507.github.io/CP-NeRF">
+                                Hao He
+                            </a><sup>1,2 *</sup>
+                        </li>
+                        <li>
+                            <a href="https://yixunliang.github.io/">
+                                Yixun Liang
+                            </a><sup>1,2 *</sup>
+                        </li>
+                        <li>
+                            <a href="https://www.yingcong.me/">
+                                Ying-Cong Chen
+                            </a><sup>1,2</sup>
+                        </li>
+                        </br>                    
+                        <div class="col-md-12 text-center" style="display: table; margin:0 auto">
+                            <table class="author-table" id="author-table">
+                                <tr>
+                                    <td>
+                                        <small>
+                                        * Equal Contribution
+                                        </small>
+                                    </td>                    
+                                <tr>
+                            </table>
+                        </div>
+                        <span class="author-block"><sup>1</sup>HKUST(GZ)</span>&nbsp;&nbsp;
+                        <span class="author-block"><sup>2</sup>HKUST</span>&nbsp;&nbsp;
+                    </ul>
+                </div>
+    <script>
+        document.getElementById('author-row').style.maxWidth = document.getElementById("title-row").clientWidth + 'px';
+    </script>
+    <div class="container" id="main">
+        <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 text-center">
+                    <ul class="nav nav-pills nav-justified">
+                        <li>
+                            <a href="https://github.com/heye0507/CP-NeRF">
+                            <img src="./img/paper_img.png" height="60px">
+                                <h4><strong>Paper (coming soon)</strong></h4>
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="https://github.com/heye0507/CP-NeRF" target="_blank">
+                            <image src="img/github.png" height="60px">
+                                <h4><strong>Code (comming soon)</strong></h4>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    Neural radiance fields (NeRF) have demonstrated a promising research direction for novel view synthesis. However, the ex- isting approaches either require per-scene optimization that takes significant computation time or condition on local features which overlook the global context of images. To tackle this shortcoming, we propose the Conditionally Parameterized Neural Radiance Fields (CP-NeRF), a plug-in module that enables NeRF to leverage contextual information from different scales. Instead of optimizing the model parameters of NeRFs directly, we train a Feature Pyramid hyperNetwork (FPN) that extracts view-dependent global and local information from images within or across scenes to produce the model parameters. Our model can be trained end-to-end with standard photometric loss from NeRF. Extensive experiments demonstrate that our method can significantly boost the performance of NeRF, achieving state-of-the-art results in various benchmark datasets.
+                </p>
+            </div>
+        </div>
+
+        <image src="img/pipeline.png" class="img-responsive" alt="overview" width="60%" style="max-height: 450px;margin:auto;">
+
+        <!-- Paper video. -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Proposed Method
+                </h3>
+                <video id="v0" width="100%" autoplay loop muted controls>
+                  <source src="video/pipline_overview.mp4" type="video/mp4" />
+                </video>
+						</div>
+        </div>
+
+        <!--/ Paper video. -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Novel View Results
+                </h3>
+
+                <table width="110%">
+                    <tr>
+                        <td align="left" valign="top" width="50%">
+                            <video id="v0" width="50%" autoplay loop muted controls>
+                                <source src="video/lego.mp4" type="video/mp4" />
+                            </video>
+                        </td>
+                        <td align="left" valign="top" width="50%">
+                            <video id="v0" width="50%" autoplay loop muted controls>
+                                <source src="video/hotdog.mp4" type="video/mp4" />
+                            </video>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="110%">
+                    <tr>
+                        <td align="left" valign="top" width="50%">
+                                <video id="v0" width="50%" autoplay loop muted controls>
+                                <source src="video/fortress.mp4" type="video/mp4" />
+                            </video>
+                        </td>
+                        <td align="left" valign="top" width="50%" display:block>
+                            <video id="v0" width="50%" autoplay loop muted controls>
+                                <source src="video/trex.mp4" type="video/mp4" />
+                            </video>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+            
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Citation
+                </h3>
+                <div class="form-group col-md-10 col-md-offset-1">
+                    <textarea id="bibtex" class="form-control" readonly>
+                    @article{he2023cpnerf
+                        author    = {Hao He, Yixun Liang, Ying-Cong Chen},
+                        title     = {CP-NeRF: Conditionally Parameterized Neural Radiance Fields for Cross-scene Novel View Synthesis},
+                        journal   = {arXiv},
+                        year      = {2023},
+                    }</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Acknowledgements
+                </h3>
+                <p class="text-justify">
+                    <br>
+                The website template was borrowed from <a href="https://yixunliang.github.io/ReTR/">Yixun Liang</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
